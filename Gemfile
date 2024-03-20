@@ -2,7 +2,8 @@ source "https://rubygems.org"
 
 ruby "3.2.2"
 
-gem "devise"
+gem 'devise'
+gem 'devise-jwt'
 gem "rspec-rails"
 gem 'factory_bot_rails'
 

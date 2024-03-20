@@ -11,7 +11,8 @@ class StudentsController < ApplicationController
 
 
   def index
-    @students = Student.all
+    @students = Student.where(class_id: params[:class_id])
+
     render json: @students, status: :ok
   end
 
