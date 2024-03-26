@@ -44,8 +44,13 @@ class AddDeviseToStudents < ActiveRecord::Migration[7.1]
   end
 
   def self.down
-    # By default, we don't want to make any assumption about how to roll back a migration when your
-    # model already existed. Please edit below which fields you would like to remove in this migration.
-    raise ActiveRecord::IrreversibleMigration
+    change_table :students do |t|
+      # Удаляем добавленные столбцы и индексы
+      t.remove :email
+      t.remove :encrypted_password
+      t.remove :reset_password_token
+      t.remove :reset_password_sent_at
+      t.remove :remember_created_at
+    end
   end
 end

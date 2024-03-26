@@ -1,10 +1,3 @@
-School.first_or_create(name: 'first_school')
-School.first_or_create(name: 'second_school')
 
-SchoolClass.first_or_create()
-SchoolClass.first_or_create()
-SchoolClass.first_or_create()
-
-Student.first_or_create()
-Student.first_or_create()
-Student.first_or_create()
+school = School.create(name: "Школа №1")
+school_class = SchoolClass.create(number: 10, letter: "А", school_id: school.id)

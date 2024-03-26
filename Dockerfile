@@ -16,6 +16,17 @@ ENV RAILS_ENV="production" \
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+       build-essential \
+       libssl-dev \
+       libsqlite3-dev \
+       # Другие необходимые зависимости здесь \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN gem install rails
+
+
 # Install packages needed to build gems
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential git libpq-dev libvips pkg-config
@@ -25,6 +36,10 @@ COPY Gemfile Gemfile.lock ./
 RUN bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile --gemfile
+
+# Decrypt credentials file
+RUN rails credentials:edit && \
+    rm -f /rails/config/credentials.yml.enc.key
 
 # Copy application code
 COPY . .
